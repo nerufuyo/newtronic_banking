@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newtronic_banking/presentation/screen/authentication_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -10,19 +10,27 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  void navigateToOtherScreen() => Future.delayed(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacementNamed(
+          context,
+          AuthenticationScreen.routeName,
+        ),
+      );
+
+  @override
+  void initState() {
+    super.initState();
+    navigateToOtherScreen();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: SvgPicture.asset(
-            'lib/assets/images/logo.svg',
-            height: 100,
-            width: 100,
-            fit: BoxFit.cover,
-          ),
+      body: Center(
+        child: Image.asset(
+          'lib/assets/images/logo.png',
+          fit: BoxFit.cover,
         ),
       ),
     );

@@ -20,8 +20,13 @@ class MyApp extends StatelessWidget {
           case SplashScreen.routeName:
             return MaterialPageRoute(builder: (_) => const SplashScreen());
           case AuthenticationScreen.routeName:
-            return MaterialPageRoute(
-                builder: (_) => const AuthenticationScreen());
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const AuthenticationScreen(),
+              transitionDuration: const Duration(milliseconds: 400),
+              transitionsBuilder: (_, animation, __, child) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+            );
 
           default:
             return MaterialPageRoute(builder: (_) => const SplashScreen());
