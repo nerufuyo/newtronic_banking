@@ -22,6 +22,8 @@ InkWell customButton({
   buttonBorderRadius,
   buttonFirstGradientColor,
   buttonSecondGradientColor,
+  buttonPadding,
+  textStyles,
   textColor,
   buttonWidth,
 }) {
@@ -37,13 +39,15 @@ InkWell customButton({
           end: Alignment.centerRight,
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: buttonPadding ??
+          const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: Center(
         child: customText(
           textValue: buttonText,
-          textStyle: headline4.copyWith(
-            color: textColor ?? Colors.white,
-          ),
+          textStyle: textStyles ??
+              headline4.copyWith(
+                color: textColor ?? Colors.white,
+              ),
         ),
       ),
     ),

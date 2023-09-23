@@ -1,0 +1,74 @@
+{
+    "data": [
+        {
+            "card_name": "BlueSky",
+            "card_number": "1234 5678 9012 3456",
+            "balance": "5,000,000 ",
+            "expiry_Date": "12/25",
+            "id": "001"
+        },
+        {
+            "card_name": "SilverWave",
+            "card_number": "9876 5432 1098 7654",
+            "balance": "3,500,000 ",
+            "expiry_Date": "09/24",
+            "id": "002"
+        },
+        {
+            "card_name": "GoldFleet",
+            "card_number": "5678 1234 5678 4321",
+            "balance": "2,000,000 ",
+            "expiry_Date": "06/23",
+            "id": "003"
+        },
+        {
+            "card_name": "PlatinumExpress",
+            "card_number": "4321 8765 1234 9876",
+            "balance": "1,750,000 ",
+            "expiry_Date": "03/25",
+            "id": "004"
+        },
+        {
+            "card_name": "DiamondElite",
+            "card_number": "8765 4321 9876 1234",
+            "balance": "4,500,000 ",
+            "expiry_Date": "08/26",
+            "id": "005"
+        },
+        {
+            "card_name": "EmeraldStar",
+            "card_number": "3456 7890 4321 8765",
+            "balance": "6,200,000 ",
+            "expiry_Date": "11/24",
+            "id": "006"
+        },
+        {
+            "card_name": "SapphirePlus",
+            "card_number": "6543 2109 8765 4321",
+            "balance": "3,000,000 ",
+            "expiry_Date": "02/23",
+            "id": "007"
+        },
+        {
+            "card_name": "RubyPremium",
+            "card_number": "7890 1234 5678 9012",
+            "balance": "1,250,000 ",
+            "expiry_Date": "07/25",
+            "id": "008"
+        },
+        {
+            "card_name": "OpalSelect",
+            "card_number": "2109 6543 4321 9876",
+            "balance": "7,800,000 ",
+            "expiry_Date": "04/24",
+            "id": "009"
+        },
+        {
+            "card_name": "PearlExpress",
+            "card_number": "9012 3456 7890 1234",
+            "balance": "2,300,000 ",
+            "expiry_Date": "10/23",
+            "id": "010"
+        }
+    ]
+}

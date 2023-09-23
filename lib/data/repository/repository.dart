@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:newtronic_banking/data/model/balance_model.dart';
+import 'package:newtronic_banking/data/model/transaction_model.dart';
 import 'package:newtronic_banking/data/model/user_model.dart';
 
 class Repository {
@@ -13,6 +15,18 @@ class Repository {
       users.add(Users.fromJson(data[i]));
     }
     return users;
+  }
+
+  Future<Users?> getUserById({required id}) async {
+    final List<Users> users = await getUsers();
+    Users? user;
+    for (var i = 0; i < users.length; i++) {
+      if (users[i].id == id) {
+        user = users[i];
+      }
+    }
+
+    return user;
   }
 
   Future<Users?> loginUser({
@@ -30,5 +44,27 @@ class Repository {
       }
     }
     return user;
+  }
+
+  Future<List<Balances>> getBalances() async {
+    final String response =
+        await rootBundle.loadString('lib/assets/json/balance.json');
+    final data = await json.decode(response)['data'];
+    final List<Balances> balances = [];
+    for (var i = 0; i < data.length; i++) {
+      balances.add(Balances.fromJson(data[i]));
+    }
+    return balances;
+  }
+
+  Future<List<Transactions>> getTransactions() async {
+    final String response =
+        await rootBundle.loadString('lib/assets/json/transaction.json');
+    final data = await json.decode(response)['transactions'];
+    final List<Transactions> transactions = [];
+    for (var i = 0; i < data.length; i++) {
+      transactions.add(Transactions.fromJson(data[i]));
+    }
+    return transactions;
   }
 }

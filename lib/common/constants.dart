@@ -76,3 +76,5 @@ final List homeScreenTabbar = [
     'icon': Icons.badge_rounded,
   },
 ];
+
+final homeScreenContentTabbar = ['Account', 'Card'];
