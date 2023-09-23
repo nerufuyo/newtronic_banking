@@ -15,6 +15,18 @@ class Repository {
     return users;
   }
 
+  Future<Users> getUserById({required id}) async {
+    final List<Users> users = await getUsers();
+    Users? user;
+    for (var i = 0; i < users.length; i++) {
+      if (users[i].id == id) {
+        user = users[i];
+      }
+    }
+
+    return user!;
+  }
+
   Future<Users?> loginUser({
     required emailOrUsername,
     required password,

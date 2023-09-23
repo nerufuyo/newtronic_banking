@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newtronic_banking/common/constants.dart';
+import 'package:newtronic_banking/data/repository/repository.dart';
 import 'package:newtronic_banking/presentation/widget/components.dart';
 import 'package:newtronic_banking/styles/pallet.dart';
 import 'package:newtronic_banking/styles/typography.dart';
@@ -44,38 +45,55 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   color: secondary0,
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 24),
                 child: TabBarView(
                   controller: tabController,
-                  children: [
-                    Container(
-                      child: Center(
+                  children: List.generate(3, (index) {
+                    if (index == 0 || index == 2) {
+                      return Center(
                         child: customText(
-                          textValue: 'Tab 1',
-                          textStyle: headline1,
+                          textValue: 'Coming Soon',
+                          textStyle: headline3.copyWith(color: primary100),
                         ),
-                      ),
-                    ),
-                    Container(
-                      child: Center(
-                        child: customText(
-                          textValue: 'Tab 2',
-                          textStyle: headline1,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Center(
-                        child: customText(
-                          textValue: 'Tab 3',
-                          textStyle: headline1,
-                        ),
-                      ),
-                    ),
-                  ],
+                      );
+                    } else {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          FutureBuilder(
+                            future: Repository().getUserById(id: widget.id),
+                            builder: (context, snapshot) {
+                              if (ConnectionState == ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else {
+                                return Column(
+                                  children: [
+                                    customSpaceVertical(8),
+                                    customText(
+                                      textValue: snapshot.data!.name,
+                                      textStyle: headline4.copyWith(
+                                        color: primary100,
+                                      ),
+                                    ),
+                                    customSpaceVertical(8),
+                                    customText(
+                                      textValue: snapshot.data!.email,
+                                      textStyle: bodyText1.copyWith(
+                                        color: primary100,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                  }),
                 ),
               ),
             ],
