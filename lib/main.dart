@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newtronic_banking/presentation/screen/authentication_screen.dart';
 import 'package:newtronic_banking/presentation/screen/home_screen.dart';
 import 'package:newtronic_banking/presentation/screen/splash_screen.dart';
+import 'package:newtronic_banking/presentation/screen/transaction_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +39,8 @@ class MyApp extends StatelessWidget {
                 return FadeTransition(opacity: animation, child: child);
               },
             );
+          case TransactionScreen.routeName:
+            return MaterialPageRoute(builder: (_) => const TransactionScreen());
 
           default:
             return MaterialPageRoute(builder: (_) => const SplashScreen());

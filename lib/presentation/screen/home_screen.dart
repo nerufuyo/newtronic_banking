@@ -8,6 +8,7 @@ import 'package:newtronic_banking/data/model/transaction_model.dart';
 import 'package:newtronic_banking/data/model/user_model.dart';
 import 'package:newtronic_banking/data/repository/repository.dart';
 import 'package:newtronic_banking/data/utils/greetings.dart';
+import 'package:newtronic_banking/presentation/screen/transaction_screen.dart';
 import 'package:newtronic_banking/presentation/widget/components.dart';
 import 'package:newtronic_banking/presentation/widget/shimmer.dart';
 import 'package:newtronic_banking/styles/pallet.dart';
@@ -108,6 +109,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 return isShimmer
                                     ? _buildShimmer()
                                     : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           _buildHeader(snapshot),
                                           _buildContentTabBar(),
@@ -231,50 +234,57 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           itemCount: transactions.length,
           itemBuilder: (context, transactionIndex) {
             final data = transactions[transactionIndex];
-            return Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: secondary20),
-                borderRadius: BorderRadius.circular(40),
-                color: transactionIndex == 0 ? primary90 : secondary0,
-              ),
-              padding: const EdgeInsets.only(right: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Visibility(
-                    visible: data['name'] == 'Transaction' ? true : false,
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 16),
-                      child: Icon(Icons.add, color: secondary0),
-                    ),
-                  ),
-                  Visibility(
-                    visible: data['name'] == 'Transaction' ? false : true,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
-                      child: CachedNetworkImage(
-                        width: 44,
-                        height: 44,
-                        fit: BoxFit.cover,
-                        imageUrl: data['image'].toString(),
-                        placeholder: (context, url) => Image.asset(
-                          'lib/assets/images/profile.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+            return InkWell(
+              onTap: () {
+                if (transactionIndex == 0) {
+                  Navigator.pushNamed(context, TransactionScreen.routeName);
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: secondary20),
+                  borderRadius: BorderRadius.circular(40),
+                  color: transactionIndex == 0 ? primary90 : secondary0,
+                ),
+                padding: const EdgeInsets.only(right: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Visibility(
+                      visible: data['name'] == 'Transaction' ? true : false,
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 16),
+                        child: Icon(Icons.add, color: secondary0),
                       ),
                     ),
-                  ),
-                  customSpaceHorizontal(8),
-                  customText(
-                    textValue: data['name'].toString(),
-                    textStyle: bodyText2.copyWith(
-                      color: transactionIndex == 0 ? secondary0 : text,
+                    Visibility(
+                      visible: data['name'] == 'Transaction' ? false : true,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: CachedNetworkImage(
+                          width: 44,
+                          height: 44,
+                          fit: BoxFit.cover,
+                          imageUrl: data['image'].toString(),
+                          placeholder: (context, url) => Image.asset(
+                            'lib/assets/images/profile.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    customSpaceHorizontal(8),
+                    customText(
+                      textValue: data['name'].toString(),
+                      textStyle: bodyText2.copyWith(
+                        color: transactionIndex == 0 ? secondary0 : text,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }),
