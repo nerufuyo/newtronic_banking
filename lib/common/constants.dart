@@ -72,7 +72,7 @@ final List homeScreenTabbar = [
     'icon': Icons.home_rounded,
   },
   {
-    'name': 'Portofolio',
+    'name': 'Porto',
     'icon': Icons.badge_rounded,
   },
 ];
