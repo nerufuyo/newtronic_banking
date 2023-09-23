@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:newtronic_banking/common/constants.dart';
 import 'package:newtronic_banking/data/repository/repository.dart';
 import 'package:newtronic_banking/presentation/screen/home_screen.dart';
