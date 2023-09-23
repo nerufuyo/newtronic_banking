@@ -28,7 +28,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   List<String> signUpErrorTexts =
       List.generate(signUpTextFieldProperties.length, (_) => '');
   int pageIndex = 0;
-  bool isPasswordObscure = false;
+  bool isPasswordObscure = true;
 
   @override
   Widget build(BuildContext context) {

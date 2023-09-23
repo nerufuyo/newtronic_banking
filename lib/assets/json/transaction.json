@@ -1,0 +1,74 @@
+{
+    "transactions": [
+        {
+            "id": "1",
+            "name": "Netflix",
+            "date": "2023-09-01",
+            "price_idr": "181,286",
+            "image": "https://www.chromegeek.com/wp-content/uploads/2020/02/netflix_logo_1.jpg"
+        },
+        {
+            "id": "2",
+            "name": "Amazon Prime",
+            "date": "2023-09-02",
+            "price_idr": "139,860",
+            "image": "https://www.schmidtisblog.de/wp-content/uploads/2020/01/Amazon-Prime-Video-1200x675.jpg"
+        },
+        {
+            "id": "3",
+            "name": "Hulu",
+            "date": "2023-09-03",
+            "price_idr": "111,860",
+            "image": "https://screenrant.com/wp-content/uploads/2018/02/Hulu-logo-on-dark-background.jpg"
+        },
+        {
+            "id": "4",
+            "name": "Disney+",
+            "date": "2023-09-04",
+            "price_idr": "125,860",
+            "image": "https://lumiere-a.akamaihd.net/v1/images/2e3d33fc0eefc265131cc02158c1c69a_4096x2303_0d094a0f.png?region=0%2C399%2C4096%2C1644"
+        },
+        {
+            "id": "5",
+            "name": "HBO Max",
+            "date": "2023-09-05",
+            "price_idr": "209,860",
+            "image": "https://cdn.cultofmac.com/wp-content/uploads/2020/04/hbo.max_.logo_.jpg"
+        },
+        {
+            "id": "6",
+            "name": "Apple TV+",
+            "date": "2023-09-06",
+            "price_idr": "69,860",
+            "image": "https://siecledigital.fr/wp-content/uploads/2019/09/Apple-TV.png"
+        },
+        {
+            "id": "7",
+            "name": "Paramount+",
+            "date": "2023-09-07",
+            "price_idr": "83,860",
+            "image": "https://www.serietotaal.nl/images/nieuws/t/m1a08ks5tuql-full.jpg"
+        },
+        {
+            "id": "8",
+            "name": "YouTube Premium",
+            "date": "2023-09-08",
+            "price_idr": "167,860",
+            "image": "https://www.tubefilter.com/wp-content/uploads/2019/03/youtube-premium-its-a-mans-world.jpg"
+        },
+        {
+            "id": "9",
+            "name": "Crunchyroll",
+            "date": "2023-09-09",
+            "price_idr": "97,300",
+            "image": "https://logos-world.net/wp-content/uploads/2021/02/Crunchyroll-Logo-2012-present.jpg"
+        },
+        {
+            "id": "10",
+            "name": "Peacock",
+            "date": "2023-09-10",
+            "price_idr": "139,860",
+            "image": "https://cdn.dribbble.com/users/2013744/screenshots/6105822/displate25_4x.png"
+        }
+    ]
+}
