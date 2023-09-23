@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
   flutter_svg: ^2.0.7
+  lottie: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +24,4 @@ flutter:
   assets:
     - lib/assets/images/
     - lib/assets/json/
+    - lib/assets/lotties/

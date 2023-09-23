@@ -1,0 +1,84 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "username": "johndoe123",
+            "email": "john.doe@newtronic.com",
+            "password": "password123",
+            "image": "john_doe.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Alice Smith",
+            "username": "alicesmith456",
+            "email": "alice.smith@newtronic.com",
+            "password": "p@ssw0rd",
+            "image": "alice_smith.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Bob Johnson",
+            "username": "bob.johnson789",
+            "email": "bob.johnson@newtronic.com",
+            "password": "securePassword1",
+            "image": "bob_johnson.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Emily Brown",
+            "username": "emilybrown12",
+            "email": "emily.brown@newtronic.com",
+            "password": "letmein2023",
+            "image": "emily_brown.jpg"
+        },
+        {
+            "id": 5,
+            "name": "Michael Wilson",
+            "username": "michaelwilson",
+            "email": "michael.wilson@newtronic.com",
+            "password": "pass1234",
+            "image": "michael_wilson.jpg"
+        },
+        {
+            "id": 6,
+            "name": "Sara Davis",
+            "username": "saradavis567",
+            "email": "sara.davis@newtronic.com",
+            "password": "saraP@ss",
+            "image": "sara_davis.jpg"
+        },
+        {
+            "id": 7,
+            "name": "James Lee",
+            "username": "jameslee90",
+            "email": "james.lee@newtronic.com",
+            "password": "secretpass",
+            "image": "james_lee.jpg"
+        },
+        {
+            "id": 8,
+            "name": "Emma Hernandez",
+            "username": "emmahernandez",
+            "email": "emma.hernandez@newtronic.com",
+            "password": "mypassword123",
+            "image": "emma_hernandez.jpg"
+        },
+        {
+            "id": 9,
+            "name": "Daniel Taylor",
+            "username": "danieltaylor34",
+            "email": "daniel.taylor@newtronic.com",
+            "password": "d@n!elP@ss",
+            "image": "daniel_taylor.jpg"
+        },
+        {
+            "id": 10,
+            "name": "Olivia Martinez",
+            "username": "oliviamartinez",
+            "email": "olivia.martinez@newtronic.com",
+            "password": "password12345",
+            "image": "olivia_martinez.jpg"
+        }
+    ]
+}
