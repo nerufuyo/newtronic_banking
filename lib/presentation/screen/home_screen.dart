@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:newtronic_banking/common/constants.dart';
 import 'package:newtronic_banking/data/model/transaction_model.dart';
 import 'package:newtronic_banking/data/model/user_model.dart';
 import 'package:newtronic_banking/data/repository/repository.dart';
+import 'package:newtronic_banking/data/utils/formatted.dart';
 import 'package:newtronic_banking/data/utils/greetings.dart';
 import 'package:newtronic_banking/presentation/widget/components.dart';
 import 'package:newtronic_banking/styles/pallet.dart';
@@ -23,7 +25,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final List<Map<String, String>> transactions = [];
 
-  String inputDate = '2021-10-10';
   late TabController tabController;
   late TabController contentController;
 
@@ -40,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   void getTransaction() async {
+    await initializeDateFormatting();
     final data = await Repository().getUsers();
     transactions.add({
       'name': 'Transaction',
