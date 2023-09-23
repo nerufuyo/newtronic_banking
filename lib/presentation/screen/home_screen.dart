@@ -7,9 +7,9 @@ import 'package:newtronic_banking/common/constants.dart';
 import 'package:newtronic_banking/data/model/transaction_model.dart';
 import 'package:newtronic_banking/data/model/user_model.dart';
 import 'package:newtronic_banking/data/repository/repository.dart';
-import 'package:newtronic_banking/data/utils/formatted.dart';
 import 'package:newtronic_banking/data/utils/greetings.dart';
 import 'package:newtronic_banking/presentation/widget/components.dart';
+import 'package:newtronic_banking/presentation/widget/shimmer.dart';
 import 'package:newtronic_banking/styles/pallet.dart';
 import 'package:newtronic_banking/styles/typography.dart';
 
@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   late TabController tabController;
   late TabController contentController;
+  bool isShimmer = true;
 
   void initTabController() {
     tabController = TabController(
@@ -57,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    Future.delayed(
+        const Duration(seconds: 2), () => setState(() => isShimmer = false));
     initTabController();
     getTransaction();
     super.initState();
@@ -102,27 +105,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             future: Repository().getUserById(id: widget.id),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
-                                return SingleChildScrollView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      _buildHeader(snapshot),
-                                      _buildContentTabBar(),
-                                      _buildContentTabBarView(context),
-                                      _customTitle(
-                                          title: 'Favorite Transaction'),
-                                      _customContentTransaction(),
-                                      _customTitle(title: 'Recent Activity'),
-                                      customRecentActivities(),
-                                    ],
-                                  ),
-                                );
+                                return isShimmer
+                                    ? _buildShimmer()
+                                    : Column(
+                                        children: [
+                                          _buildHeader(snapshot),
+                                          _buildContentTabBar(),
+                                          _buildContentTabBarView(context),
+                                          _customTitle(
+                                              title: 'Favorite Transactions'),
+                                          _customContentTransaction(),
+                                          _customTitle(
+                                              title: 'Recent Activities'),
+                                          customRecentActivities(),
+                                        ],
+                                      );
                               } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
+                                return _buildShimmer();
                               }
                             },
                           );
@@ -143,6 +142,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildShimmer() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        shimmerHeader(),
+        shimmerCard(),
+        _customTitle(title: 'Favorite Transactions'),
+        shimmerClip(),
+        _customTitle(title: 'Recent Activities'),
+        shimmerTile(),
+      ],
     );
   }
 
