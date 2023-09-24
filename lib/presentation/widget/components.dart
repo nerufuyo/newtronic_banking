@@ -26,6 +26,9 @@ InkWell customButton({
   textStyles,
   textColor,
   buttonWidth,
+  buttonLeftIcon,
+  buttonRightIcon,
+  isButtonIcon = false,
 }) {
   return InkWell(
     onTap: buttonOnTap,
@@ -41,14 +44,26 @@ InkWell customButton({
       ),
       padding: buttonPadding ??
           const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      child: Center(
-        child: customText(
-          textValue: buttonText,
-          textStyle: textStyles ??
-              headline4.copyWith(
-                color: textColor ?? Colors.white,
-              ),
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: isButtonIcon == true
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: buttonLeftIcon != null,
+            child: buttonLeftIcon ?? const SizedBox.shrink(),
+          ),
+          customText(
+            textValue: buttonText,
+            textStyle: textStyles ??
+                headline4.copyWith(color: textColor ?? secondary0),
+          ),
+          Visibility(
+            visible: buttonRightIcon != null,
+            child: buttonRightIcon ?? const SizedBox.shrink(),
+          ),
+        ],
       ),
     ),
   );
@@ -64,6 +79,7 @@ TextField customTextField({
   TextInputType keyboardType = TextInputType.text,
   prefixIcon,
   suffixIcon,
+  isFilled = false,
 }) {
   return TextField(
     controller: controller,
@@ -73,6 +89,8 @@ TextField customTextField({
     inputFormatters: inputFormatters,
     decoration: InputDecoration(
       errorText: errorText.isEmpty ? null : errorText,
+      filled: isFilled,
+      fillColor: secondary10.withOpacity(.5),
       hintText: hintText,
       hintStyle: bodyText2.copyWith(color: text),
       prefixIcon: Icon(

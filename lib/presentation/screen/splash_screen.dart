@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newtronic_banking/presentation/screen/authentication_screen.dart';
+import 'package:newtronic_banking/presentation/screen/auth/authentication_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

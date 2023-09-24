@@ -63,18 +63,12 @@ final List logInTextFieldProperties = [
 ];
 
 final List homeScreenTabbar = [
-  {
-    'name': 'Tracker',
-    'icon': Icons.pie_chart,
-  },
-  {
-    'name': 'Home',
-    'icon': Icons.home_rounded,
-  },
-  {
-    'name': 'Porto',
-    'icon': Icons.badge_rounded,
-  },
+  {'name': 'Tracker', 'icon': Icons.pie_chart},
+  {'name': 'Home', 'icon': Icons.home_rounded},
+  {'name': 'Porto', 'icon': Icons.badge_rounded},
 ];
 
 final homeScreenContentTabbar = ['Account', 'Card'];
+
+final List transactionScreenTabbar = ['Accounts', 'Favorites', 'Autodebit'];
+final List addTransactionScreenTabbar = ['Accounts', 'Favorites'];

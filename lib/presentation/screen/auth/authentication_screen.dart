@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:newtronic_banking/common/constants.dart';
 import 'package:newtronic_banking/data/repository/repository.dart';
-import 'package:newtronic_banking/presentation/screen/home_screen.dart';
+import 'package:newtronic_banking/presentation/screen/main/home_screen.dart';
 import 'package:newtronic_banking/presentation/widget/components.dart';
 import 'package:newtronic_banking/styles/pallet.dart';
 import 'package:newtronic_banking/styles/typography.dart';

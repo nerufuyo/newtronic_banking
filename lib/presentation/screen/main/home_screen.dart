@@ -8,7 +8,7 @@ import 'package:newtronic_banking/data/model/transaction_model.dart';
 import 'package:newtronic_banking/data/model/user_model.dart';
 import 'package:newtronic_banking/data/repository/repository.dart';
 import 'package:newtronic_banking/data/utils/greetings.dart';
-import 'package:newtronic_banking/presentation/screen/transaction_screen.dart';
+import 'package:newtronic_banking/presentation/screen/transactions/transaction_screen.dart';
 import 'package:newtronic_banking/presentation/widget/components.dart';
 import 'package:newtronic_banking/presentation/widget/shimmer.dart';
 import 'package:newtronic_banking/styles/pallet.dart';
@@ -75,73 +75,76 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: primary80,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(top: 16),
-          child: Column(
-            children: [
-              _buildTabBar(),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .95,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: primary80,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(top: 16),
+            child: Column(
+              children: [
+                _buildTabBar(),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * .95,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                    color: secondary0,
                   ),
-                  color: secondary0,
-                ),
-                padding: const EdgeInsets.only(top: 24),
-                child: TabBarView(
-                  controller: tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: List.generate(
-                    homeScreenTabbar.length,
-                    (index) {
-                      switch (index) {
-                        case 1:
-                          return FutureBuilder(
-                            future: Repository().getUserById(id: widget.id),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return isShimmer
-                                    ? _buildShimmer()
-                                    : Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          _buildHeader(snapshot),
-                                          _buildContentTabBar(),
-                                          _buildContentTabBarView(context),
-                                          _customTitle(
-                                              title: 'Favorite Transactions'),
-                                          _customContentTransaction(),
-                                          _customTitle(
-                                              title: 'Recent Activities'),
-                                          customRecentActivities(),
-                                        ],
-                                      );
-                              } else {
-                                return _buildShimmer();
-                              }
-                            },
-                          );
-                        default:
-                          return Center(
-                            child: LottieBuilder.asset(
-                              'lib/assets/lotties/lottieComingSoon.json',
-                              width: MediaQuery.of(context).size.width * .5,
-                              height: MediaQuery.of(context).size.height * .5,
-                            ),
-                          );
-                      }
-                    },
+                  padding: const EdgeInsets.only(top: 24),
+                  child: TabBarView(
+                    controller: tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: List.generate(
+                      homeScreenTabbar.length,
+                      (index) {
+                        switch (index) {
+                          case 1:
+                            return FutureBuilder(
+                              future: Repository().getUserById(id: widget.id),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return isShimmer
+                                      ? _buildShimmer()
+                                      : Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            _buildHeader(snapshot),
+                                            _buildContentTabBar(),
+                                            _buildContentTabBarView(context),
+                                            _customTitle(
+                                                title: 'Favorite Transactions'),
+                                            _customContentTransaction(),
+                                            _customTitle(
+                                                title: 'Recent Activities'),
+                                            customRecentActivities(),
+                                          ],
+                                        );
+                                } else {
+                                  return _buildShimmer();
+                                }
+                              },
+                            );
+                          default:
+                            return Center(
+                              child: LottieBuilder.asset(
+                                'lib/assets/lotties/lottieComingSoon.json',
+                                width: MediaQuery.of(context).size.width * .5,
+                                height: MediaQuery.of(context).size.height * .5,
+                              ),
+                            );
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -325,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     itemBuilder: (context, cardIndex) {
                       final data = snapshot.data![cardIndex];
                       return Container(
-                        width: MediaQuery.of(context).size.width * .55,
+                        width: MediaQuery.of(context).size.width * .6,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           color: primary90,
@@ -382,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     (index) => customButton(
                                       buttonWidth:
                                           MediaQuery.of(context).size.width *
-                                              .225,
+                                              .25,
                                       buttonOnTap: () {},
                                       buttonText: index == 0 ? 'MOVE' : 'QRIS',
                                       buttonFirstGradientColor: secondary0,
@@ -390,6 +393,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       buttonPadding: const EdgeInsets.all(8),
                                       buttonBorderRadius:
                                           BorderRadius.circular(8),
+                                      buttonLeftIcon: index == 0
+                                          ? const Icon(
+                                              Icons.wallet_rounded,
+                                              color: primary90,
+                                            )
+                                          : const Icon(Icons.qr_code_rounded,
+                                              color: primary90),
+                                      isButtonIcon: true,
                                       textStyles: subHeadline5.copyWith(
                                         color: primary80,
                                       ),

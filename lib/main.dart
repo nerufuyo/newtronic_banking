@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:newtronic_banking/presentation/screen/authentication_screen.dart';
-import 'package:newtronic_banking/presentation/screen/home_screen.dart';
+import 'package:newtronic_banking/presentation/screen/auth/authentication_screen.dart';
+import 'package:newtronic_banking/presentation/screen/main/home_screen.dart';
 import 'package:newtronic_banking/presentation/screen/splash_screen.dart';
-import 'package:newtronic_banking/presentation/screen/transaction_screen.dart';
+import 'package:newtronic_banking/presentation/screen/transactions/add_transaction_screen.dart';
+import 'package:newtronic_banking/presentation/screen/transactions/transaction_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +42,9 @@ class MyApp extends StatelessWidget {
             );
           case TransactionScreen.routeName:
             return MaterialPageRoute(builder: (_) => const TransactionScreen());
+          case AddTransactionScreen.routeName:
+            return MaterialPageRoute(
+                builder: (_) => const AddTransactionScreen());
 
           default:
             return MaterialPageRoute(builder: (_) => const SplashScreen());
