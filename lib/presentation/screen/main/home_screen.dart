@@ -331,7 +331,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         width: MediaQuery.of(context).size.width * .6,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: primary90,
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              primary100,
+                              primary90,
+                              primary80,
+                            ],
+                          ),
                         ),
                         padding: const EdgeInsets.all(16),
                         child: Column(

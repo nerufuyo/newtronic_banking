@@ -118,7 +118,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                                   ),
                                   customSpaceHorizontal(8),
                                   customText(
-                                    textValue: 'Multiple Transfer',
+                                    textValue: 'Multiple Transaction',
                                     textStyle: subHeadline4,
                                   ),
                                 ],
@@ -134,7 +134,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                                   customSpaceVertical(16),
                                   customText(
                                     textValue:
-                                        'Transfer now! There is an interesting promo for you',
+                                        'Transaction now! There is an interesting promo for you',
                                     textStyle: bodyText2.copyWith(
                                         color: text.withOpacity(.5)),
                                     textAlign: TextAlign.center,
@@ -144,9 +144,9 @@ class _TransactionScreenState extends State<TransactionScreen>
                                     buttonOnTap: () => Navigator.pushNamed(
                                         context,
                                         AddTransactionScreen.routeName),
-                                    buttonText: 'New Transfer',
+                                    buttonText: 'New Transaction',
                                     buttonWidth:
-                                        MediaQuery.of(context).size.width * .5,
+                                        MediaQuery.of(context).size.width * .6,
                                     buttonFirstGradientColor: primary90,
                                     buttonSecondGradientColor: primary90,
                                     buttonBorderRadius:
