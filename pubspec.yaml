@@ -17,11 +17,19 @@ dependencies:
   intl: ^0.18.1
   cached_network_image: ^3.2.3
   sqflite: ^2.3.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "lib/assets/images/newtronic.png"
+  min_sdk_android: 21
 
 flutter:
   uses-material-design: true
