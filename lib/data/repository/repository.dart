@@ -90,4 +90,15 @@ class Repository {
     }
     return bank!;
   }
+
+  Future<List<Banks>> searchBankByName({required name}) async {
+    final List<Banks> banks = await getBanks();
+    final List<Banks> searchResult = [];
+    for (var i = 0; i < banks.length; i++) {
+      if (banks[i].name.toLowerCase().contains(name.toLowerCase())) {
+        searchResult.add(banks[i]);
+      }
+    }
+    return searchResult;
+  }
 }
