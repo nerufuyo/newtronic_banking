@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
@@ -26,6 +27,9 @@ InkWell customButton({
   textStyles,
   textColor,
   buttonWidth,
+  buttonLeftIcon,
+  buttonRightIcon,
+  isButtonIcon = false,
 }) {
   return InkWell(
     onTap: buttonOnTap,
@@ -41,14 +45,26 @@ InkWell customButton({
       ),
       padding: buttonPadding ??
           const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      child: Center(
-        child: customText(
-          textValue: buttonText,
-          textStyle: textStyles ??
-              headline4.copyWith(
-                color: textColor ?? Colors.white,
-              ),
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: isButtonIcon == true
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: buttonLeftIcon != null,
+            child: buttonLeftIcon ?? const SizedBox.shrink(),
+          ),
+          customText(
+            textValue: buttonText,
+            textStyle: textStyles ??
+                headline4.copyWith(color: textColor ?? secondary0),
+          ),
+          Visibility(
+            visible: buttonRightIcon != null,
+            child: buttonRightIcon ?? const SizedBox.shrink(),
+          ),
+        ],
       ),
     ),
   );
@@ -60,19 +76,24 @@ TextField customTextField({
   required String errorText,
   List<TextInputFormatter>? inputFormatters,
   void Function(String)? onChanged,
+  void onTapTextField,
   bool obscureText = false,
   TextInputType keyboardType = TextInputType.text,
   prefixIcon,
   suffixIcon,
+  isFilled = false,
 }) {
   return TextField(
     controller: controller,
     obscureText: obscureText,
     keyboardType: keyboardType,
     onChanged: onChanged,
+    onTap: () => onTapTextField,
     inputFormatters: inputFormatters,
     decoration: InputDecoration(
       errorText: errorText.isEmpty ? null : errorText,
+      filled: isFilled,
+      fillColor: secondary10.withOpacity(.5),
       hintText: hintText,
       hintStyle: bodyText2.copyWith(color: text),
       prefixIcon: Icon(
@@ -126,6 +147,7 @@ Future<dynamic> customDialog(BuildContext context,
             customText(
               textValue: textDialog,
               textStyle: headline4.copyWith(color: text),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -214,6 +236,107 @@ Future<dynamic> customDialogWithButton(
               ),
             ),
           ],
+        ),
+      ),
+    ),
+  );
+}
+
+Future<dynamic> customDraggableModalBottomSheet(
+  BuildContext context, {
+  required bottomSheetTitle,
+  required bottomSheetSearchController,
+  required bottomSheetItemCount,
+  required bottomSheetOnTap,
+  required bottomSheetImage,
+  required bottomSheetItemName,
+}) {
+  return showModalBottomSheet(
+    context: context,
+    barrierColor: text.withOpacity(.5),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+      ),
+    ),
+    isDismissible: true,
+    builder: (context) => Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16), color: secondary0),
+      child: IntrinsicHeight(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: 80,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: text.withOpacity(.25),
+                  ),
+                ),
+              ),
+              customSpaceVertical(16),
+              customText(
+                textValue: bottomSheetTitle,
+                textStyle: headline5,
+              ),
+              customSpaceVertical(16),
+              customTextField(
+                controller: bottomSheetSearchController,
+                hintText: 'Search',
+                errorText: '',
+                prefixIcon: Icons.search_rounded,
+                isFilled: true,
+              ),
+              customSpaceVertical(16),
+              Expanded(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    separatorBuilder: (context, index) =>
+                        customSpaceVertical(16),
+                    itemCount: bottomSheetItemCount,
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        bottomSheetOnTap();
+                        Navigator.pop(context);
+                      },
+                      child: ListTile(
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: CachedNetworkImage(
+                            width: 44,
+                            height: 44,
+                            fit: BoxFit.cover,
+                            imageUrl: bottomSheetImage,
+                            placeholder: (context, url) => Image.asset(
+                              'lib/assets/images/profile.jpg',
+                              fit: BoxFit.cover,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+                        title: customText(
+                          textValue: bottomSheetItemName,
+                          textStyle: headline5,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),

@@ -1,0 +1,124 @@
+{
+    "banks": [
+        {
+            "id": 1,
+            "name": "Bank Mandiri",
+            "number": "008",
+            "image": "https://logos-download.com/wp-content/uploads/2016/06/Bank_Mandiri_logo_fon.png"
+        },
+        {
+            "id": 2,
+            "name": "Bank Negara Indonesia (BNI)",
+            "number": "009",
+            "image": "https://2.bp.blogspot.com/-2b8O-GNBjO0/UlyZn4f0lpI/AAAAAAAAC1o/ZWoScPp5Mrs/w1200-h630-p-k-no-nu/Logo-Bank-BNI-dark_BG.png"
+        },
+        {
+            "id": 3,
+            "name": "Bank Rakyat Indonesia (BRI)",
+            "number": "002",
+            "image": "http://4.bp.blogspot.com/-tceaeWKDv00/UNhHf_6AdZI/AAAAAAAAERE/hR3lYKZxCiQ/s1600/Logo+Bank+BRI.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Bank Central Asia (BCA)",
+            "number": "014",
+            "image": "http://1.bp.blogspot.com/-THibJz4NpO0/UNhEbur9-fI/AAAAAAAAEQM/b5J4fwEPD-c/s1600/Logo+Bank+BCA.JPG"
+        },
+        {
+            "id": 5,
+            "name": "Bank Danamon",
+            "number": "011",
+            "image": "http://3.bp.blogspot.com/-NCLsNbCVtUc/UPDcRAZ0oRI/AAAAAAAAE5s/Sk2d1GkoBh0/s1600/Logo+Bank+Danamon.JPG"
+        },
+        {
+            "id": 6,
+            "name": "Bank Permata",
+            "number": "013",
+            "image": "http://4.bp.blogspot.com/-su4Pxx4oweo/UNk6o4lDJxI/AAAAAAAAEVw/JXaK7_2IWzo/s1600/Logo+Bank+Permata.jpg"
+        },
+        {
+            "id": 7,
+            "name": "Bank CIMB Niaga",
+            "number": "022",
+            "image": "https://1000logos.net/wp-content/uploads/2020/10/CIMB-Logo.png"
+        },
+        {
+            "id": 8,
+            "name": "Bank Panin",
+            "number": "019",
+            "image": "http://3.bp.blogspot.com/-05SbvsauCaE/UNk15orRHII/AAAAAAAAEVU/pC38Ga3Jza0/s1600/Logo+Bank+Panin.jpg"
+        },
+        {
+            "id": 9,
+            "name": "Bank Mega",
+            "number": "426",
+            "image": "https://logowiki.net/wp-content/uploads/imgp/Bank-Mega-Logo-1-4382.JPG"
+        },
+        {
+            "id": 10,
+            "name": "Bank Bukopin",
+            "number": "441",
+            "image": "http://3.bp.blogspot.com/-Ks_Ub0TIliQ/UNhMrmawUSI/AAAAAAAAESs/Q-X5Bkzu01E/s1600/Logo+Bank+Bukopin.jpg"
+        },
+        {
+            "id": 11,
+            "name": "Bank OCBC NISP",
+            "number": "028",
+            "image": "https://1000logos.net/wp-content/uploads/2021/10/OCBC-Bank-Logo-2048x1152.png"
+        },
+        {
+            "id": 12,
+            "name": "Bank BII Maybank",
+            "number": "016",
+            "image": "http://1.bp.blogspot.com/-MI_VJkJB9IU/VI5XwbRWK7I/AAAAAAAAAOM/0i8UTCFWbEg/s1600/bii.png"
+        },
+        {
+            "id": 13,
+            "name": "Bank DKI",
+            "number": "111",
+            "image": "https://3.bp.blogspot.com/-LEtqUlT9HFM/Wo6P8HrI9DI/AAAAAAAAOfo/Dc8QeQXVJw86ISh_Fe-ZDQ07us08eK2nQCLcBGAs/w1200-h630-p-k-no-nu/Logo-Bank-BPD-DKI.png"
+        },
+        {
+            "id": 14,
+            "name": "Bank Jatim",
+            "number": "114",
+            "image": "https://4.bp.blogspot.com/-luq8mi8r2H4/WgPA0u9E40I/AAAAAAAAEp0/c5SO780joT4rC5eBSQOJ5XSz0pNy7hQrgCLcBGAs/s1600/bank%2Bjatim.jpg"
+        },
+        {
+            "id": 15,
+            "name": "Bank Aceh",
+            "number": "116",
+            "image": "https://3.bp.blogspot.com/-Qqu8fjeNbBo/UnDa7bNwLNI/AAAAAAAADOE/3OOGa2ZRKVA/s1600/Logo-Bank-Aceh.png"
+        },
+        {
+            "id": 16,
+            "name": "Bank Kaltimtara",
+            "number": "117",
+            "image": "https://4.bp.blogspot.com/-62eaP9pvnKs/XD_vfLRpSOI/AAAAAAAARlg/KPiuUbP89WkgzDU9nG4U8U-RFojNGHEuQCLcBGAs/s1600/Bank%2BKaltim.png"
+        },
+        {
+            "id": 17,
+            "name": "Bank Papua",
+            "number": "118",
+            "image": "https://1.bp.blogspot.com/-siwXGIWKfpo/XrwA3Znv0EI/AAAAAAAAAfg/rvLF019aUdId7w90a14QY-rUablwHspDgCLcBGAsYHQ/s1600/Bank%2BPapua%2B%255Bwww.blogovector.com%255D.png"
+        },
+        {
+            "id": 18,
+            "name": "Bank Sulut",
+            "number": "119",
+            "image": "https://images.bisnis-cdn.com/posts/2020/10/26/1309754/bank-sulutgo.jpg"
+        },
+        {
+            "id": 19,
+            "name": "Bank Sulteng",
+            "number": "120",
+            "image": "https://3.bp.blogspot.com/-7hByqTZ4BY4/XD_igmCSPKI/AAAAAAAARj4/pf9-MS60N1QIcPxpgwdU8rjoEP2dO7jIwCLcBGAs/w1200-h630-p-k-no-nu/Bank%2BSulutGO.png"
+        },
+        {
+            "id": 20,
+            "name": "Bank Sultra",
+            "number": "121",
+            "image": "https://asbanda.org/upload/blog_asbanda_20191109020722.jpg"
+        }
+    ]
+}

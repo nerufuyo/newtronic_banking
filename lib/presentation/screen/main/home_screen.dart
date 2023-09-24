@@ -7,9 +7,10 @@ import 'package:newtronic_banking/common/constants.dart';
 import 'package:newtronic_banking/data/model/transaction_model.dart';
 import 'package:newtronic_banking/data/model/user_model.dart';
 import 'package:newtronic_banking/data/repository/repository.dart';
-import 'package:newtronic_banking/data/utils/formatted.dart';
 import 'package:newtronic_banking/data/utils/greetings.dart';
+import 'package:newtronic_banking/presentation/screen/transactions/transaction_screen.dart';
 import 'package:newtronic_banking/presentation/widget/components.dart';
+import 'package:newtronic_banking/presentation/widget/shimmer.dart';
 import 'package:newtronic_banking/styles/pallet.dart';
 import 'package:newtronic_banking/styles/typography.dart';
 
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   late TabController tabController;
   late TabController contentController;
+  bool isShimmer = true;
 
   void initTabController() {
     tabController = TabController(
@@ -57,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    Future.delayed(
+        const Duration(seconds: 2), () => setState(() => isShimmer = false));
     initTabController();
     getTransaction();
     super.initState();
@@ -71,78 +75,93 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: primary80,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(top: 16),
-          child: Column(
-            children: [
-              _buildTabBar(),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .95,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: primary80,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(top: 16),
+            child: Column(
+              children: [
+                _buildTabBar(),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * .95,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                    color: secondary0,
                   ),
-                  color: secondary0,
-                ),
-                padding: const EdgeInsets.only(top: 24),
-                child: TabBarView(
-                  controller: tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: List.generate(
-                    homeScreenTabbar.length,
-                    (index) {
-                      switch (index) {
-                        case 1:
-                          return FutureBuilder(
-                            future: Repository().getUserById(id: widget.id),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return SingleChildScrollView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      _buildHeader(snapshot),
-                                      _buildContentTabBar(),
-                                      _buildContentTabBarView(context),
-                                      _customTitle(
-                                          title: 'Favorite Transaction'),
-                                      _customContentTransaction(),
-                                      _customTitle(title: 'Recent Activity'),
-                                      customRecentActivities(),
-                                    ],
-                                  ),
-                                );
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
-                          );
-                        default:
-                          return Center(
-                            child: LottieBuilder.asset(
-                              'lib/assets/lotties/lottieComingSoon.json',
-                              width: MediaQuery.of(context).size.width * .5,
-                              height: MediaQuery.of(context).size.height * .5,
-                            ),
-                          );
-                      }
-                    },
+                  padding: const EdgeInsets.only(top: 24),
+                  child: TabBarView(
+                    controller: tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: List.generate(
+                      homeScreenTabbar.length,
+                      (index) {
+                        switch (index) {
+                          case 1:
+                            return FutureBuilder(
+                              future: Repository().getUserById(id: widget.id),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return isShimmer
+                                      ? _buildShimmer()
+                                      : Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            _buildHeader(snapshot),
+                                            _buildContentTabBar(),
+                                            _buildContentTabBarView(context),
+                                            _customTitle(
+                                                title: 'Favorite Transactions'),
+                                            _customContentTransaction(),
+                                            _customTitle(
+                                                title: 'Recent Activities'),
+                                            customRecentActivities(),
+                                          ],
+                                        );
+                                } else {
+                                  return _buildShimmer();
+                                }
+                              },
+                            );
+                          default:
+                            return Center(
+                              child: LottieBuilder.asset(
+                                'lib/assets/lotties/lottieComingSoon.json',
+                                width: MediaQuery.of(context).size.width * .5,
+                                height: MediaQuery.of(context).size.height * .5,
+                              ),
+                            );
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildShimmer() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        shimmerHeader(),
+        shimmerCard(),
+        _customTitle(title: 'Favorite Transactions'),
+        shimmerClip(),
+        _customTitle(title: 'Recent Activities'),
+        shimmerTile(),
+      ],
     );
   }
 
@@ -218,50 +237,57 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           itemCount: transactions.length,
           itemBuilder: (context, transactionIndex) {
             final data = transactions[transactionIndex];
-            return Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: secondary20),
-                borderRadius: BorderRadius.circular(40),
-                color: transactionIndex == 0 ? primary90 : secondary0,
-              ),
-              padding: const EdgeInsets.only(right: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Visibility(
-                    visible: data['name'] == 'Transaction' ? true : false,
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 16),
-                      child: Icon(Icons.add, color: secondary0),
-                    ),
-                  ),
-                  Visibility(
-                    visible: data['name'] == 'Transaction' ? false : true,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
-                      child: CachedNetworkImage(
-                        width: 44,
-                        height: 44,
-                        fit: BoxFit.cover,
-                        imageUrl: data['image'].toString(),
-                        placeholder: (context, url) => Image.asset(
-                          'lib/assets/images/profile.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+            return InkWell(
+              onTap: () {
+                if (transactionIndex == 0) {
+                  Navigator.pushNamed(context, TransactionScreen.routeName);
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: secondary20),
+                  borderRadius: BorderRadius.circular(40),
+                  color: transactionIndex == 0 ? primary90 : secondary0,
+                ),
+                padding: const EdgeInsets.only(right: 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Visibility(
+                      visible: data['name'] == 'Transaction' ? true : false,
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 16),
+                        child: Icon(Icons.add, color: secondary0),
                       ),
                     ),
-                  ),
-                  customSpaceHorizontal(8),
-                  customText(
-                    textValue: data['name'].toString(),
-                    textStyle: bodyText2.copyWith(
-                      color: transactionIndex == 0 ? secondary0 : text,
+                    Visibility(
+                      visible: data['name'] == 'Transaction' ? false : true,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: CachedNetworkImage(
+                          width: 44,
+                          height: 44,
+                          fit: BoxFit.cover,
+                          imageUrl: data['image'].toString(),
+                          placeholder: (context, url) => Image.asset(
+                            'lib/assets/images/profile.jpg',
+                            fit: BoxFit.cover,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    customSpaceHorizontal(8),
+                    customText(
+                      textValue: data['name'].toString(),
+                      textStyle: bodyText2.copyWith(
+                        color: transactionIndex == 0 ? secondary0 : text,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }),
@@ -302,10 +328,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     itemBuilder: (context, cardIndex) {
                       final data = snapshot.data![cardIndex];
                       return Container(
-                        width: MediaQuery.of(context).size.width * .55,
+                        width: MediaQuery.of(context).size.width * .6,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
-                          color: primary90,
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              primary100,
+                              primary90,
+                              primary80,
+                            ],
+                          ),
                         ),
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -359,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     (index) => customButton(
                                       buttonWidth:
                                           MediaQuery.of(context).size.width *
-                                              .225,
+                                              .25,
                                       buttonOnTap: () {},
                                       buttonText: index == 0 ? 'MOVE' : 'QRIS',
                                       buttonFirstGradientColor: secondary0,
@@ -367,6 +401,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       buttonPadding: const EdgeInsets.all(8),
                                       buttonBorderRadius:
                                           BorderRadius.circular(8),
+                                      buttonLeftIcon: index == 0
+                                          ? const Icon(
+                                              Icons.wallet_rounded,
+                                              color: primary90,
+                                            )
+                                          : const Icon(Icons.qr_code_rounded,
+                                              color: primary90),
+                                      isButtonIcon: true,
                                       textStyles: subHeadline5.copyWith(
                                         color: primary80,
                                       ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:newtronic_banking/data/model/balance_model.dart';
+import 'package:newtronic_banking/data/model/bank_model.dart';
 import 'package:newtronic_banking/data/model/transaction_model.dart';
 import 'package:newtronic_banking/data/model/user_model.dart';
 
@@ -66,5 +67,27 @@ class Repository {
       transactions.add(Transactions.fromJson(data[i]));
     }
     return transactions;
+  }
+
+  Future<List<Banks>> getBanks() async {
+    final String response =
+        await rootBundle.loadString('lib/assets/json/bank.json');
+    final data = await json.decode(response)['banks'];
+    final List<Banks> banks = [];
+    for (var i = 0; i < data.length; i++) {
+      banks.add(Banks.fromJson(data[i]));
+    }
+    return banks;
+  }
+
+  Future<Banks> getBanksById({required id}) async {
+    final List<Banks> banks = await getBanks();
+    Banks? bank;
+    for (var i = 0; i < banks.length; i++) {
+      if (banks[i].id == id) {
+        bank = banks[i];
+      }
+    }
+    return bank!;
   }
 }
