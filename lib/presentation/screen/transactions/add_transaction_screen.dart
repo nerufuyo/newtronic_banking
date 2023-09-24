@@ -30,6 +30,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
   final List<Map<String, String>> balances = [];
   final List<Map<String, String>> tempBank = [];
   final List<Map<String, String>> tempBalance = [];
+  List<Map<String, dynamic>> filteredBanks = [];
+  List<Map<String, dynamic>> filteredBalances = [];
 
   late TabController tabController;
   int pageIndex = 0;
@@ -49,6 +51,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
   void fetchData() async {
     final bank = await Repository().getBanks();
     final balance = await Repository().getBalances();
+    filteredBanks = List.from(banks);
+    filteredBalances = List.from(balances);
 
     for (var i = 0; i < balance.length; i++) {
       setState(
@@ -542,76 +546,104 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
         ),
       ),
       isDismissible: true,
-      builder: (context) => Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16), color: secondary0),
-        child: IntrinsicHeight(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 80,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: text.withOpacity(.25),
-                    ),
-                  ),
-                ),
-                customSpaceVertical(16),
-                customText(
-                  textValue: 'Select Bank',
-                  textStyle: headline5,
-                ),
-                customSpaceVertical(16),
-                customTextField(
-                  controller: searchController,
-                  hintText: 'Search',
-                  errorText: '',
-                  prefixIcon: Icons.search_rounded,
-                  isFilled: true,
-                ),
-                customSpaceVertical(16),
-                Expanded(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height / 2,
-                    child: ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      separatorBuilder: (context, index) =>
-                          customSpaceVertical(16),
-                      itemCount: banks.length,
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () {
-                          setState(() {
-                            if (tempBalance.isNotEmpty) {
-                              tempBalance.clear();
-                              accountName = balances[index]['name']!;
-                              accountNumber = balances[index]['number']!;
-                            }
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: ListTile(
-                          leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(40),
-                              child: Image.asset(
-                                  'lib/assets/images/newtronic.png')),
-                          title: customText(
-                            textValue: balances[index]['name']!,
-                            textStyle: headline5,
-                          ),
-                        ),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16), color: secondary0),
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 80,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: text.withOpacity(.25),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  customSpaceVertical(16),
+                  customText(
+                    textValue: 'Select Bank',
+                    textStyle: headline5,
+                  ),
+                  customSpaceVertical(16),
+                  customTextField(
+                    controller: searchController,
+                    hintText: 'Search',
+                    errorText: '',
+                    prefixIcon: Icons.search_rounded,
+                    isFilled: true,
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        setState(() {
+                          tempBalance.addAll(balances.where((element) =>
+                              element['name']!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              element['number']!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase())));
+                        });
+                      } else {
+                        setState(() {
+                          if (tempBalance.isNotEmpty) tempBalance.clear();
+                        });
+                      }
+                    },
+                  ),
+                  customSpaceVertical(16),
+                  Expanded(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 2,
+                      child: filteredBalances.isEmpty
+                          ? Center(
+                              child: customText(
+                                textValue: '${searchController.text} not found',
+                                textStyle: subHeadline5,
+                              ),
+                            )
+                          : ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              separatorBuilder: (context, index) =>
+                                  customSpaceVertical(16),
+                              itemCount: filteredBalances.length,
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (tempBalance.isNotEmpty) {
+                                      tempBalance.clear();
+                                      accountName =
+                                          filteredBalances[index]['name']!;
+                                      accountNumber =
+                                          filteredBalances[index]['number']!;
+                                    }
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: ListTile(
+                                  leading: ClipRRect(
+                                      borderRadius: BorderRadius.circular(40),
+                                      child: Image.asset(
+                                          'lib/assets/images/newtronic.png')),
+                                  title: customText(
+                                    textValue: filteredBalances[index]['name']!,
+                                    textStyle: headline5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -630,94 +662,122 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>
         ),
       ),
       isDismissible: true,
-      builder: (context) => Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16), color: secondary0),
-        child: IntrinsicHeight(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 80,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: text.withOpacity(.25),
-                    ),
-                  ),
-                ),
-                customSpaceVertical(16),
-                customText(
-                  textValue: 'Select Bank',
-                  textStyle: headline5,
-                ),
-                customSpaceVertical(16),
-                customTextField(
-                  controller: searchController,
-                  hintText: 'Search',
-                  errorText: '',
-                  prefixIcon: Icons.search_rounded,
-                  isFilled: true,
-                ),
-                customSpaceVertical(16),
-                Expanded(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height / 2,
-                    child: ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      separatorBuilder: (context, index) =>
-                          customSpaceVertical(16),
-                      itemCount: banks.length,
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () {
-                          setState(() {
-                            if (tempBank.isNotEmpty) tempBank.clear();
-                            bankNameController.text = banks[index]['name']!;
-                            tempBank.add({
-                              'id': banks[index]['id']!,
-                              'name': banks[index]['name']!,
-                              'number': banks[index]['number']!,
-                              'image': banks[index]['image']!,
-                            });
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
-                            child: CachedNetworkImage(
-                              width: 44,
-                              height: 44,
-                              fit: BoxFit.cover,
-                              imageUrl: banks[index]['image']!,
-                              placeholder: (context, url) => Image.asset(
-                                'lib/assets/images/profile.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            ),
-                          ),
-                          title: customText(
-                            textValue: banks[index]['name']!,
-                            textStyle: headline5,
-                          ),
-                        ),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16), color: secondary0),
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 80,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: text.withOpacity(.25),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  customSpaceVertical(16),
+                  customText(
+                    textValue: 'Select Bank',
+                    textStyle: headline5,
+                  ),
+                  customSpaceVertical(16),
+                  customTextField(
+                    controller: searchController,
+                    hintText: 'Search',
+                    errorText: '',
+                    prefixIcon: Icons.search_rounded,
+                    isFilled: true,
+                    onChanged: (query) => setState(() {
+                      filteredBanks = filterBanks(query);
+                    }),
+                  ),
+                  customSpaceVertical(16),
+                  Expanded(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 2,
+                      child: filteredBanks.isEmpty
+                          ? Center(
+                              child: customText(
+                                textValue: '${searchController.text} not found',
+                                textStyle: subHeadline5,
+                              ),
+                            )
+                          : ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              separatorBuilder: (context, index) =>
+                                  customSpaceVertical(16),
+                              itemCount: filteredBanks.length,
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (tempBank.isNotEmpty) tempBank.clear();
+                                    bankNameController.text =
+                                        filteredBanks[index]['name']!;
+                                    tempBank.add({
+                                      'id': filteredBanks[index]['id']!,
+                                      'name': filteredBanks[index]['name']!,
+                                      'number': filteredBanks[index]['number']!,
+                                      'image': filteredBanks[index]['image']!,
+                                    });
+                                  });
+                                  Navigator.pop(context);
+                                },
+                                child: ListTile(
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(40),
+                                    child: CachedNetworkImage(
+                                      width: 44,
+                                      height: 44,
+                                      fit: BoxFit.cover,
+                                      imageUrl: filteredBanks[index]['image']!,
+                                      placeholder: (context, url) =>
+                                          Image.asset(
+                                        'lib/assets/images/profile.jpg',
+                                        fit: BoxFit.cover,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
+                                  ),
+                                  title: customText(
+                                    textValue: filteredBanks[index]['name']!,
+                                    textStyle: headline5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  List<Map<String, dynamic>> filterAccounts(String query) {
+    return balances.where((account) {
+      final accountName = account['name'].toString().toLowerCase();
+      return accountName.contains(query.toLowerCase());
+    }).toList();
+  }
+
+  List<Map<String, dynamic>> filterBanks(String query) {
+    return banks.where((bank) {
+      final bankName = bank['name'].toString().toLowerCase();
+      return bankName.contains(query.toLowerCase());
+    }).toList();
   }
 }
