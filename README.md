@@ -23,6 +23,9 @@ Newtronic Banking is a mobile application that allows you to manage your bank ac
 - Clone This Repository
 - Run `flutter pub get`
 - Run `flutter run`
+- Login with this account
+  - Email: `michael.wilson@newtronic.com` or `michaelwilson`
+  - Password: `pass1234`
 - Done
 
 
