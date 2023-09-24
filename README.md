@@ -1,16 +1,31 @@
-# newtronic_banking
+# NEWTRONIC BANKING
 
-A new Flutter project.
+**Listyo Adi | Mobile Developer**
 
-## Getting Started
+## Description
+Newtronic Banking is a mobile application that allows you to manage your bank account and make transactions. This application is built using Flutter. This application is still in development stage. 
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- [x] Authentication Screen
+- [x] Home Screen
+- [x] Transaction Screen
+- [x] Add New Transaction Screen
+- [x] Status Transaction Screen
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Requirements
+- Flutter
+- Android SDK
+- Android Emulator / Android Device (Google Pixel 5)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Installation
+- Clone This Repository
+- Run `flutter pub get`
+- Run `flutter run`
+- Done
+
+
+## Screenshot
+<p align="center">
+  <img src="screenshot/NewtronicBanking.jpg" alt="Newtronic Banking">
